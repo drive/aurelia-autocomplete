@@ -1,22 +1,22 @@
 {
-  "name": "aurelia-skeleton-plugin",
-  "version": "1.0.1",
-  "description": "A starter kit for building an Aurelia plugin.",
+  "name": "aurelia-autocomplete",
+  "version": "1.0.0",
+  "description": "Autocomplete control for Aurelia",
   "keywords": [
     "aurelia",
     "plugin",
     "skeleton"
   ],
-  "homepage": "http://aurelia.io",
+  "homepage": "http://github/drivesoftware/aurelia-autocomplete",
   "bugs": {
-    "url": "https://github.com/aurelia/skeleton-plugin/issues"
+    "url": "https://github.com/drivesoftware/aurelia-autocomplete/issues"
   },
-  "license": "CC0-1.0",
-  "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
+  "license": "MIT",
+  "author": "Simon Fox <simon.fox@drivesoftware.co.nz>",
   "main": "dist/commonjs/index.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/aurelia/skeleton-plugin"
+    "url": "http://github.com/drivesoftware/aurelia-autocomplete"
   },
   "devDependencies": {
     "aurelia-tools": "^1.0.0",
