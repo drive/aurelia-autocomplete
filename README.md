@@ -1,0 +1,102 @@
+# aurelia-autocomplete
+
+aurelia-autocomplete is a plugin for the Aurelia platform for a autocomplete control.
+
+Shamelessly ripped, _improved_, and packaged from a @jdanyow gist https://gist.github.com/jdanyow/acf8253329939b2e046cd0e3394351fe. Inspired by a want to escape a jQuery implementation we had been using in drivesoftware/aurelia-widgets.
+
+Currently implemented for bootstrap but this could be abstracted in future.
+
+### Basic Usage
+
+Activate the plugin in your application's aurelia configure callback:
+
+```javascript
+export function configure(aurelia) {
+  aurelia.use
+    .standardConfiguration()
+    .plugin('aurelia-autocomplete');
+
+  aurelia.start().then(a => a.setRoot());
+}
+```
+
+In your view
+
+```html
+<autocomplete value.bind="client" controller.bind="clientAutoCompleteController"></autocomplete>
+```
+
+In your view model
+
+```javascript
+import {AutoCompleteController} from 'aurelia-autocomplete';
+
+...
+
+this.client = null;
+this.clientAutoCompleteController = new AutoCompleteController((searchText) => this.clientApi.search(searchText));
+```
+
+The default controller implementation provided expects a single constructor argument which is a search function `suggestion[] search(string searchText)`. The result of the search function should be an array of suggestions based on the search text, with the single assumption that there is a `toString()` function on the suggestion objects.
+
+### Advanced Usage
+
+#### AutoCompleteController
+
+To customize the controller replace/override any of the following functions
+
+`string formatSuggestion(suggestion)`
+
+Used to convert a suggestion to a string of text describing that suggestion. Default implementation just calls `suggestion.toString()`
+
+**Example**
+Given suggestion results 
+```json
+{
+  code: 'A-SUGGESTION',
+  description: ' A Suggestion Result'
+}
+```
+
+you could format suggestions by replacing `formatSuggestion` as follows
+
+```javascript
+formatSuggestion(suggestion) {
+  return `${code} ${description}`;
+}
+
+// example suggestion when selected or listed would be formatted as 'A-SUGGESTION A Suggestion Result'
+```
+
+`suggestion createSuggestion(suggestion)`
+
+ Used to create suggestion objects for the autocomplete control. Default implementation adds a `selectedText` property (using `formatSuggestion`) to the suggestion which is used by the default suggestion result template (which is a replacable part described below).
+
+ The default suggestion template used by the autocomplete control is
+ `<template replaceable part="suggestion">${suggestion.selectedText}</template>`
+ where the `selectedText` property will be created by `createSuggestion`
+
+**Example**
+
+Use the code and description properties of the above suggestion results.
+
+Create suggestions that include code and description properties:
+```javascript
+createSuggestion(suggestion) {
+  return {
+    id: suggestion.id,
+    code: suggestion.code,
+    description: suggestion.description
+  };
+}
+```
+
+Format the autocomplete results with code in bold by replacing the suggestion part:
+```html
+<autocomplete value.bind="client" controller.bind="clientAutoCompleteController">
+  <template replaceable part="suggestion"><strong>${suggestion.code}</strong> ${suggestion.description}</template>
+</autocomplete>
+```
+
+
+
