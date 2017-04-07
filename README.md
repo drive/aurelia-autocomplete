@@ -1,58 +1,102 @@
-# aurelia-skeleton-plugin
+# aurelia-autocomplete
 
-[![ZenHub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://zenhub.io)
-[![Join the chat at https://gitter.im/aurelia/discuss](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aurelia/discuss?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+aurelia-autocomplete is a plugin for the Aurelia platform for a autocomplete control.
 
-This skeleton is part of the [Aurelia](http://www.aurelia.io/) platform. It sets up a standard aurelia plugin using gulp to build your ES6 code with the Babel compiler. Karma/Jasmine testing is also configured.
+Shamelessly ripped, _improved_, and packaged from a @jdanyow gist https://gist.github.com/jdanyow/acf8253329939b2e046cd0e3394351fe. Inspired by a want to escape a jQuery implementation we had been using in drivesoftware/aurelia-widgets.
 
-> To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.aurelia.io/) and [our email list](http://eepurl.com/ces50j). We also invite you to [follow us on twitter](https://twitter.com/aureliaeffect). If you have questions, please [join our community on Gitter](https://gitter.im/aurelia/discuss) or use [stack overflow](http://stackoverflow.com/search?q=aurelia). Documentation can be found [in our developer hub](http://aurelia.io/hub.html). If you would like to have deeper insight into our development process, please install the [ZenHub](https://zenhub.io) Chrome or Firefox Extension and visit any of our repository's boards.
+Currently implemented for bootstrap but this could be abstracted in future.
 
-## Building The Code
+### Basic Usage
 
-To build the code, follow these steps.
+Activate the plugin in your application's aurelia configure callback:
 
-1. Ensure that [NodeJS](http://nodejs.org/) is installed. This provides the platform on which the build tooling runs.
-2. From the project folder, execute the following command:
+```javascript
+export function configure(aurelia) {
+  aurelia.use
+    .standardConfiguration()
+    .plugin('aurelia-autocomplete');
 
-  ```shell
-  npm install
-  ```
-3. Ensure that [Gulp](http://gulpjs.com/) is installed. If you need to install it, use the following command:
+  aurelia.start().then(a => a.setRoot());
+}
+```
 
-  ```shell
-  npm install -g gulp
-  ```
-4. To build the code, you can now run:
+In your view
 
-  ```shell
-  gulp build
-  ```
-5. You will find the compiled code in the `dist` folder, available in three module formats: AMD, CommonJS and ES6.
+```html
+<autocomplete value.bind="client" controller.bind="clientAutoCompleteController"></autocomplete>
+```
 
-6. See `gulpfile.js` for other tasks related to generating the docs and linting.
+In your view model
 
-## Running The Tests
+```javascript
+import {AutoCompleteController} from 'aurelia-autocomplete';
 
-To run the unit tests, first ensure that you have followed the steps above in order to install all dependencies and successfully build the library. Once you have done that, proceed with these additional steps:
+...
 
-1. Ensure that the [Karma](http://karma-runner.github.io/) CLI is installed. If you need to install it, use the following command:
+this.client = null;
+this.clientAutoCompleteController = new AutoCompleteController((searchText) => this.clientApi.search(searchText));
+```
 
-  ```shell
-  npm install -g karma-cli
-  ```
-2. Ensure that [jspm](http://jspm.io/) is installed. If you need to install it, use the following commnand:
+The default controller implementation provided expects a single constructor argument which is a search function `suggestion[] search(string searchText)`. The result of the search function should be an array of suggestions based on the search text, with the single assumption that there is a `toString()` function on the suggestion objects.
 
-  ```shell
-  npm install -g jspm
-  ```
-3. Install the client-side dependencies with jspm:
+### Advanced Usage
 
-  ```shell
-  jspm install
-  ```
+#### AutoCompleteController
 
-4. You can now run the tests with this command:
+To customize the controller replace/override any of the following functions
 
-  ```shell
-  karma start
-  ```
+`string formatSuggestion(suggestion)`
+
+Used to convert a suggestion to a string of text describing that suggestion. Default implementation just calls `suggestion.toString()`
+
+**Example**
+Given suggestion results 
+```json
+{
+  code: 'A-SUGGESTION',
+  description: ' A Suggestion Result'
+}
+```
+
+you could format suggestions by replacing `formatSuggestion` as follows
+
+```javascript
+formatSuggestion(suggestion) {
+  return `${code} ${description}`;
+}
+
+// example suggestion when selected or listed would be formatted as 'A-SUGGESTION A Suggestion Result'
+```
+
+`suggestion createSuggestion(suggestion)`
+
+ Used to create suggestion objects for the autocomplete control. Default implementation adds a `selectedText` property (using `formatSuggestion`) to the suggestion which is used by the default suggestion result template (which is a replacable part described below).
+
+ The default suggestion template used by the autocomplete control is
+ `<template replaceable part="suggestion">${suggestion.selectedText}</template>`
+ where the `selectedText` property will be created by `createSuggestion`
+
+**Example**
+
+Use the code and description properties of the above suggestion results.
+
+Create suggestions that include code and description properties:
+```javascript
+createSuggestion(suggestion) {
+  return {
+    id: suggestion.id,
+    code: suggestion.code,
+    description: suggestion.description
+  };
+}
+```
+
+Format the autocomplete results with code in bold by replacing the suggestion part:
+```html
+<autocomplete value.bind="client" controller.bind="clientAutoCompleteController">
+  <template replaceable part="suggestion"><strong>${suggestion.code}</strong> ${suggestion.description}</template>
+</autocomplete>
+```
+
+
+

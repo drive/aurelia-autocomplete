@@ -20,5 +20,6 @@ export class AutoCompleteController {
 
   createSuggestion(suggestion) {
     suggestion.selectedText = this.formatSuggestion(suggestion);
+    return suggestion;
   }
 }
