@@ -72,9 +72,17 @@ formatSuggestion(suggestion) {
 
  Used to create suggestion objects for the autocomplete control. Default implementation adds a `selectedText` property (using `formatSuggestion`) to the suggestion which is used by the default suggestion result template (which is a replacable part described below).
 
- The default suggestion template used by the autocomplete control is
- `<template replaceable part="suggestion">${suggestion.selectedText}</template>`
- where the `selectedText` property will be created by `createSuggestion`
+ The default suggestion template used by the autocomplete control uses a compose element to render a configurable/dynamic view
+```html
+<!-- the replacable suggestion part -->
+<template replaceable part="suggestion">
+  <compose view.bind="suggestionView" view-model.bind="suggestion"></compose>
+</template>
+
+<!-- the default view template passed to suggestionView -->
+<template>${selectedText}</template
+```
+where the `selectedText` property will be created by `createSuggestion`
 
 **Example**
 
@@ -97,6 +105,23 @@ Format the autocomplete results with code in bold by replacing the suggestion pa
   <template replaceable part="suggestion"><strong>${suggestion.code}</strong> ${suggestion.description}</template>
 </autocomplete>
 ```
+
+If you have a common format across your application that you would like to use for suggestions in all places where the autocomplete used (and the default `selectedText` does not satisfy your needs) you can configure the template used by the compose in the fallback slot. This means you will not need the extra part replacement line in your markup `<template replaceable part="suggestion"><strong>${suggestion.code}</strong> ${suggestion.description}</template>` for every autocomplete control. This is done via plugin configuration:
+
+```javascript
+export function configure(aurelia) {
+  aurelia.use
+    .standardConfiguration()
+    .plugin('aurelia-autocomplete', config => {
+      config.settings.suggestionTemplate = '<template><strong>${code}</strong> ${description}</template>'
+    });
+
+  aurelia.start().then(a => a.setRoot());
+}
+```
+
+NOTE that the properties used by the template are not `suggestion.` prefixed as they are when replacing the slot content inline.
+
 
 
 
