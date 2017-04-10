@@ -18,13 +18,13 @@ System.register([], function (_export, _context) {
         function AutoCompleteController(search) {
           _classCallCheck(this, AutoCompleteController);
 
-          this.search = search;
+          this._search = search;
         }
 
         AutoCompleteController.prototype.search = function search(searchText) {
           var _this = this;
 
-          return this.search(searchText).then(function (results) {
+          return this._search(searchText).then(function (results) {
             var suggestions = [];
             for (var _iterator = results, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
               var _ref;

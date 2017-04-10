@@ -17,6 +17,8 @@ var _aureliaPal = require('aurelia-pal');
 
 var _aureliaTaskQueue = require('aurelia-task-queue');
 
+var _autocompleteoptions = require('./autocompleteoptions');
+
 function _initDefineProp(target, property, descriptor, context) {
   if (!descriptor) return;
   Object.defineProperty(target, property, {
@@ -90,6 +92,8 @@ var Autocomplete = exports.Autocomplete = (_dec = (0, _aureliaDependencyInjectio
 
     this.element = element;
     this.taskQueue = taskQueue;
+
+    this.suggestionView = new _aureliaTemplating.InlineViewStrategy(_autocompleteoptions.autoCompleteOptions.suggestionTemplate);
   }
 
   Autocomplete.prototype.display = function display(name) {

@@ -1,10 +1,10 @@
 export let AutoCompleteController = class AutoCompleteController {
   constructor(search) {
-    this.search = search;
+    this._search = search;
   }
 
   search(searchText) {
-    return this.search(searchText).then(results => {
+    return this._search(searchText).then(results => {
       let suggestions = [];
       for (let result of results) {
         suggestions.push(this.createSuggestion(result));

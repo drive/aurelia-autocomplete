@@ -44,10 +44,11 @@ function _initializerWarningHelper(descriptor, context) {
 }
 
 import { bindingMode, observable } from 'aurelia-binding';
-import { bindable } from 'aurelia-templating';
+import { bindable, InlineViewStrategy } from 'aurelia-templating';
 import { inject } from 'aurelia-dependency-injection';
 import { DOM } from 'aurelia-pal';
 import { TaskQueue } from 'aurelia-task-queue';
+import { autoCompleteOptions } from './autocompleteoptions';
 
 let nextID = 0;
 
@@ -76,6 +77,8 @@ export let Autocomplete = (_dec = inject(Element, TaskQueue), _dec2 = bindable({
 
     this.element = element;
     this.taskQueue = taskQueue;
+
+    this.suggestionView = new InlineViewStrategy(autoCompleteOptions.suggestionTemplate);
   }
 
   display(name) {

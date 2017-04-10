@@ -1,4 +1,4 @@
-define(['exports', './autocompletecontroller'], function (exports, _autocompletecontroller) {
+define(['exports', './autocompletecontroller', './autocompleteconfiguration'], function (exports, _autocompletecontroller, _autocompleteconfiguration) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -7,7 +7,14 @@ define(['exports', './autocompletecontroller'], function (exports, _autocomplete
   exports.AutoCompleteController = undefined;
   exports.configure = configure;
   exports.AutoCompleteController = _autocompletecontroller.AutoCompleteController;
-  function configure(config) {
-    config.globalResources('./autocomplete');
+  function configure(aurelia, callback) {
+
+    var config = new _autocompleteconfiguration.AutoCompleteConfiguration();
+
+    if (typeof callback === 'function') {
+      callback(config);
+    }
+
+    aurelia.globalResources('./autocomplete');
   }
 });
