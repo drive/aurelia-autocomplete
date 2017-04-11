@@ -1,3 +1,9 @@
+# [1.3.0](https://github.com/drivesoftware/aurelia-autocomplete/releases/tag/1.3.0) (2017-04-11)
+
+### Features
+
+* hide the label element if the title property is empty
+
 # [1.2.0](https://github.com/drivesoftware/aurelia-autocomplete/releases/tag/1.2.0) (2017-04-11)
 
 ### Features
