@@ -5,8 +5,9 @@
            class="control-label">${title}</label>
     <div class="autocomplete-container">
       <input id="${'au-autocomplete-' + id}"
-             placeholder.bind="placeholder"
              value.bind="inputValue & debounce:delay"
+             disabled.bind="disabled"
+             placeholder.bind="placeholder"             
              keydown.delegate="keydown($event.which)"
              blur.trigger="blur()"
              class="form-control"

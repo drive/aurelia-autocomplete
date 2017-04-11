@@ -13,6 +13,7 @@ export class Autocomplete {
   @bindable({ defaultBindingMode: bindingMode.twoWay }) value;
   @bindable title = '';
   @bindable placeholder = '';
+  @bindable disabled = false;
   @bindable delay = 300;
   @observable inputValue = '';
 
