@@ -15,6 +15,7 @@ export class Autocomplete {
   @bindable placeholder = '';
   @bindable disabled = false;
   @bindable delay = 300;
+  @bindable small = false;
   @observable inputValue = '';
 
   id = nextID++;
