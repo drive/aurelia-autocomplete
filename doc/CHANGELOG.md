@@ -1,3 +1,9 @@
+# [1.4.0](https://github.com/drivesoftware/aurelia-autocomplete/releases/tag/1.4.0) (2017-04-11)
+
+### Features
+
+* add small property to allow for bootstrap small control
+
 # [1.3.0](https://github.com/drivesoftware/aurelia-autocomplete/releases/tag/1.3.0) (2017-04-11)
 
 ### Features
