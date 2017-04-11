@@ -55,7 +55,7 @@ define(['exports', 'aurelia-binding', 'aurelia-templating', 'aurelia-dependency-
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
   }
 
-  var _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6;
+  var _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7;
 
   var nextID = 0;
 
@@ -71,9 +71,11 @@ define(['exports', 'aurelia-binding', 'aurelia-templating', 'aurelia-dependency-
 
       _initDefineProp(this, 'placeholder', _descriptor4, this);
 
-      _initDefineProp(this, 'delay', _descriptor5, this);
+      _initDefineProp(this, 'disabled', _descriptor5, this);
 
-      _initDefineProp(this, 'inputValue', _descriptor6, this);
+      _initDefineProp(this, 'delay', _descriptor6, this);
+
+      _initDefineProp(this, 'inputValue', _descriptor7, this);
 
       this.id = nextID++;
       this.expanded = false;
@@ -238,12 +240,17 @@ define(['exports', 'aurelia-binding', 'aurelia-templating', 'aurelia-dependency-
     initializer: function initializer() {
       return '';
     }
-  }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, 'delay', [_aureliaTemplating.bindable], {
+  }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, 'disabled', [_aureliaTemplating.bindable], {
+    enumerable: true,
+    initializer: function initializer() {
+      return false;
+    }
+  }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, 'delay', [_aureliaTemplating.bindable], {
     enumerable: true,
     initializer: function initializer() {
       return 300;
     }
-  }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, 'inputValue', [_aureliaBinding.observable], {
+  }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, 'inputValue', [_aureliaBinding.observable], {
     enumerable: true,
     initializer: function initializer() {
       return '';

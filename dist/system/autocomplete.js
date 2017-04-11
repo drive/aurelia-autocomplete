@@ -3,7 +3,7 @@
 System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-task-queue', './autocompleteoptions'], function (_export, _context) {
   "use strict";
 
-  var bindingMode, observable, bindable, InlineViewStrategy, inject, DOM, TaskQueue, autoCompleteOptions, _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, nextID, Autocomplete;
+  var bindingMode, observable, bindable, InlineViewStrategy, inject, DOM, TaskQueue, autoCompleteOptions, _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, nextID, Autocomplete;
 
   function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
@@ -85,9 +85,11 @@ System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-dependency-in
 
           _initDefineProp(this, 'placeholder', _descriptor4, this);
 
-          _initDefineProp(this, 'delay', _descriptor5, this);
+          _initDefineProp(this, 'disabled', _descriptor5, this);
 
-          _initDefineProp(this, 'inputValue', _descriptor6, this);
+          _initDefineProp(this, 'delay', _descriptor6, this);
+
+          _initDefineProp(this, 'inputValue', _descriptor7, this);
 
           this.id = nextID++;
           this.expanded = false;
@@ -252,12 +254,17 @@ System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-dependency-in
         initializer: function initializer() {
           return '';
         }
-      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, 'delay', [bindable], {
+      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, 'disabled', [bindable], {
+        enumerable: true,
+        initializer: function initializer() {
+          return false;
+        }
+      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, 'delay', [bindable], {
         enumerable: true,
         initializer: function initializer() {
           return 300;
         }
-      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, 'inputValue', [observable], {
+      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, 'inputValue', [observable], {
         enumerable: true,
         initializer: function initializer() {
           return '';

@@ -3,14 +3,16 @@
   <div class="form-group">
 		<label for="${'au-autocomplete-' + id}"
            class="control-label">${title}</label>
-    <input id="${'au-autocomplete-' + id}"
-            placeholder.bind="placeholder"
-            value.bind="inputValue & debounce:delay"
-            keydown.delegate="keydown($event.which)"
-            blur.trigger="blur()"
-            class="form-control"
-            type="text" autocomplete="off"
-            aria-autocomplete="list">
+    <div class="autocomplete-container">
+      <input id="${'au-autocomplete-' + id}"
+             value.bind="inputValue & debounce:delay"
+             disabled.bind="disabled"
+             placeholder.bind="placeholder"             
+             keydown.delegate="keydown($event.which)"
+             blur.trigger="blur()"
+             class="form-control"
+             type="text" autocomplete="off"
+             aria-autocomplete="list"/>
       <ul if.bind="expanded"
           id.one-time="'au-autocomplate-' + id + '-suggestions'"
           class="suggestions" role="listbox"
@@ -24,6 +26,7 @@
             <compose view.bind="suggestionView" view-model.bind="suggestion"></compose>
           </template>
         </li>
-    </ul>
+      </ul>
+    </div>
   </div>
 </template>

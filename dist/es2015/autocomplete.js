@@ -1,4 +1,4 @@
-var _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6;
+var _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7;
 
 function _initDefineProp(target, property, descriptor, context) {
   if (!descriptor) return;
@@ -63,9 +63,11 @@ export let Autocomplete = (_dec = inject(Element, TaskQueue), _dec2 = bindable({
 
     _initDefineProp(this, 'placeholder', _descriptor4, this);
 
-    _initDefineProp(this, 'delay', _descriptor5, this);
+    _initDefineProp(this, 'disabled', _descriptor5, this);
 
-    _initDefineProp(this, 'inputValue', _descriptor6, this);
+    _initDefineProp(this, 'delay', _descriptor6, this);
+
+    _initDefineProp(this, 'inputValue', _descriptor7, this);
 
     this.id = nextID++;
     this.expanded = false;
@@ -220,12 +222,17 @@ export let Autocomplete = (_dec = inject(Element, TaskQueue), _dec2 = bindable({
   initializer: function () {
     return '';
   }
-}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, 'delay', [bindable], {
+}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, 'disabled', [bindable], {
+  enumerable: true,
+  initializer: function () {
+    return false;
+  }
+}), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, 'delay', [bindable], {
   enumerable: true,
   initializer: function () {
     return 300;
   }
-}), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, 'inputValue', [observable], {
+}), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, 'inputValue', [observable], {
   enumerable: true,
   initializer: function () {
     return '';
