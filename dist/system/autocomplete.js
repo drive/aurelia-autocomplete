@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-task-queue'], function (_export, _context) {
+System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-task-queue', './autocompleteoptions'], function (_export, _context) {
   "use strict";
 
-  var bindingMode, observable, bindable, inject, DOM, TaskQueue, _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, nextID, Autocomplete;
+  var bindingMode, observable, bindable, InlineViewStrategy, inject, DOM, TaskQueue, autoCompleteOptions, _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, nextID, Autocomplete;
 
   function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
@@ -60,12 +60,15 @@ System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-dependency-in
       observable = _aureliaBinding.observable;
     }, function (_aureliaTemplating) {
       bindable = _aureliaTemplating.bindable;
+      InlineViewStrategy = _aureliaTemplating.InlineViewStrategy;
     }, function (_aureliaDependencyInjection) {
       inject = _aureliaDependencyInjection.inject;
     }, function (_aureliaPal) {
       DOM = _aureliaPal.DOM;
     }, function (_aureliaTaskQueue) {
       TaskQueue = _aureliaTaskQueue.TaskQueue;
+    }, function (_autocompleteoptions) {
+      autoCompleteOptions = _autocompleteoptions.autoCompleteOptions;
     }],
     execute: function () {
       nextID = 0;
@@ -96,6 +99,8 @@ System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-dependency-in
 
           this.element = element;
           this.taskQueue = taskQueue;
+
+          this.suggestionView = new InlineViewStrategy(autoCompleteOptions.suggestionTemplate);
         }
 
         Autocomplete.prototype.display = function display(name) {

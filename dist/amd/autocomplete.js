@@ -1,4 +1,4 @@
-define(['exports', 'aurelia-binding', 'aurelia-templating', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-task-queue'], function (exports, _aureliaBinding, _aureliaTemplating, _aureliaDependencyInjection, _aureliaPal, _aureliaTaskQueue) {
+define(['exports', 'aurelia-binding', 'aurelia-templating', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-task-queue', './autocompleteoptions'], function (exports, _aureliaBinding, _aureliaTemplating, _aureliaDependencyInjection, _aureliaPal, _aureliaTaskQueue, _autocompleteoptions) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -85,6 +85,8 @@ define(['exports', 'aurelia-binding', 'aurelia-templating', 'aurelia-dependency-
 
       this.element = element;
       this.taskQueue = taskQueue;
+
+      this.suggestionView = new _aureliaTemplating.InlineViewStrategy(_autocompleteoptions.autoCompleteOptions.suggestionTemplate);
     }
 
     Autocomplete.prototype.display = function display(name) {

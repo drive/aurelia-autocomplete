@@ -20,7 +20,9 @@
             class-name.bind="($index === index ? 'selected' : '') + ' suggestion'"
             mousedown.delegate="suggestionClicked(suggestion)"
             role="option">
-          <template replaceable part="suggestion">${suggestion.selectedText}</template>
+          <template replaceable part="suggestion" >
+            <compose view.bind="suggestionView" view-model.bind="suggestion"></compose>
+          </template>
         </li>
     </ul>
   </div>
