@@ -20,7 +20,7 @@
           ref="suggestionsUL">
         <li repeat.for="suggestion of suggestions" 
             id.one-time="'au-autocomplate-' + id + '-suggestion-' + $index"
-            class-name.bind="($index === index ? 'selected' : '') + (small ? 'small' : '') + ' suggestion'"
+            class-name.bind="($index === index ? 'selected ' : '') + (small ? 'small ' : '') + 'suggestion'"
             mousedown.delegate="suggestionClicked(suggestion)"
             role="option">
           <template replaceable part="suggestion" >
