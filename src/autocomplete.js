@@ -1,13 +1,14 @@
-import {bindingMode, observable} from 'aurelia-binding';
+import {bindingMode, observable, BindingEngine} from 'aurelia-binding';
 import {bindable, InlineViewStrategy} from 'aurelia-templating';
-import {inject} from 'aurelia-dependency-injection';
+import {Focus} from 'aurelia-templating-resources';
+import {inject, Optional} from 'aurelia-dependency-injection';
 import {DOM} from 'aurelia-pal';
 import {TaskQueue} from 'aurelia-task-queue';
 import {autoCompleteOptions} from './autocompleteoptions';
 
 let nextID = 0;
 
-@inject(Element, TaskQueue)
+@inject(Element, BindingEngine, TaskQueue, Optional.of(Focus))
 export class Autocomplete {
   @bindable controller;
   @bindable({ defaultBindingMode: bindingMode.twoWay }) value;
@@ -26,13 +27,26 @@ export class Autocomplete {
   suggestionsUL = null;
   userInput = '';
   
-  constructor(element, taskQueue) {
+  constructor(element, bindingEngine, taskQueue, focus) {
     this.element = element;
+    this.bindingEngine = bindingEngine;
     this.taskQueue = taskQueue;
+
+    this.focusSubscription = null;
+    if(focus) {
+      this.focusSubscription = this.bindingEngine.propertyObserver(focus, "value")
+                                            .subscribe(this.focusChanged.bind(this));
+    }
 
     this.suggestionView = new InlineViewStrategy(autoCompleteOptions.suggestionTemplate);
   }
   
+  detached() {
+    if(this.focusSubscription !== null) {
+      this.focusSubscription.dispose();
+    }
+  }
+
   display(name) {
     this.updatingInput = true;
     this.inputValue = name;
@@ -158,7 +172,9 @@ export class Autocomplete {
     this.select(suggestion);
   }
   
-  focus() {
-    this.element.firstElementChild.focus();
+  focusChanged(newFocus, oldFocus) {
+    if(newFocus) {
+      this.element.querySelector("input").focus();
+    }
   }
 }
