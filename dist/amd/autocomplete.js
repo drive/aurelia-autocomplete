@@ -1,4 +1,4 @@
-define(['exports', 'aurelia-binding', 'aurelia-templating', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-task-queue', './autocompleteoptions'], function (exports, _aureliaBinding, _aureliaTemplating, _aureliaDependencyInjection, _aureliaPal, _aureliaTaskQueue, _autocompleteoptions) {
+define(['exports', 'aurelia-binding', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-task-queue', './autocompleteoptions'], function (exports, _aureliaBinding, _aureliaTemplating, _aureliaTemplatingResources, _aureliaDependencyInjection, _aureliaPal, _aureliaTaskQueue, _autocompleteoptions) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -59,8 +59,8 @@ define(['exports', 'aurelia-binding', 'aurelia-templating', 'aurelia-dependency-
 
   var nextID = 0;
 
-  var Autocomplete = exports.Autocomplete = (_dec = (0, _aureliaDependencyInjection.inject)(Element, _aureliaTaskQueue.TaskQueue), _dec2 = (0, _aureliaTemplating.bindable)({ defaultBindingMode: _aureliaBinding.bindingMode.twoWay }), _dec(_class = (_class2 = function () {
-    function Autocomplete(element, taskQueue) {
+  var Autocomplete = exports.Autocomplete = (_dec = (0, _aureliaDependencyInjection.inject)(Element, _aureliaBinding.BindingEngine, _aureliaTaskQueue.TaskQueue, _aureliaDependencyInjection.Optional.of(_aureliaTemplatingResources.Focus)), _dec2 = (0, _aureliaTemplating.bindable)({ defaultBindingMode: _aureliaBinding.bindingMode.twoWay }), _dec(_class = (_class2 = function () {
+    function Autocomplete(element, bindingEngine, taskQueue, focus) {
       _classCallCheck(this, Autocomplete);
 
       _initDefineProp(this, 'controller', _descriptor, this);
@@ -88,10 +88,22 @@ define(['exports', 'aurelia-binding', 'aurelia-templating', 'aurelia-dependency-
       this.userInput = '';
 
       this.element = element;
+      this.bindingEngine = bindingEngine;
       this.taskQueue = taskQueue;
+
+      this.focusSubscription = null;
+      if (focus) {
+        this.focusSubscription = this.bindingEngine.propertyObserver(focus, "value").subscribe(this.focusChanged.bind(this));
+      }
 
       this.suggestionView = new _aureliaTemplating.InlineViewStrategy(_autocompleteoptions.autoCompleteOptions.suggestionTemplate);
     }
+
+    Autocomplete.prototype.detached = function detached() {
+      if (this.focusSubscription !== null) {
+        this.focusSubscription.dispose();
+      }
+    };
 
     Autocomplete.prototype.display = function display(name) {
       this.updatingInput = true;
@@ -221,8 +233,10 @@ define(['exports', 'aurelia-binding', 'aurelia-templating', 'aurelia-dependency-
       this.select(suggestion);
     };
 
-    Autocomplete.prototype.focus = function focus() {
-      this.element.firstElementChild.focus();
+    Autocomplete.prototype.focusChanged = function focusChanged(newFocus, oldFocus) {
+      if (newFocus) {
+        this.element.querySelector("input").focus();
+      }
     };
 
     return Autocomplete;

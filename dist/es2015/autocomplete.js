@@ -43,18 +43,19 @@ function _initializerWarningHelper(descriptor, context) {
   throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-import { bindingMode, observable } from 'aurelia-binding';
+import { bindingMode, observable, BindingEngine } from 'aurelia-binding';
 import { bindable, InlineViewStrategy } from 'aurelia-templating';
-import { inject } from 'aurelia-dependency-injection';
+import { Focus } from 'aurelia-templating-resources';
+import { inject, Optional } from 'aurelia-dependency-injection';
 import { DOM } from 'aurelia-pal';
 import { TaskQueue } from 'aurelia-task-queue';
 import { autoCompleteOptions } from './autocompleteoptions';
 
 let nextID = 0;
 
-export let Autocomplete = (_dec = inject(Element, TaskQueue), _dec2 = bindable({ defaultBindingMode: bindingMode.twoWay }), _dec(_class = (_class2 = class Autocomplete {
+export let Autocomplete = (_dec = inject(Element, BindingEngine, TaskQueue, Optional.of(Focus)), _dec2 = bindable({ defaultBindingMode: bindingMode.twoWay }), _dec(_class = (_class2 = class Autocomplete {
 
-  constructor(element, taskQueue) {
+  constructor(element, bindingEngine, taskQueue, focus) {
     _initDefineProp(this, 'controller', _descriptor, this);
 
     _initDefineProp(this, 'value', _descriptor2, this);
@@ -80,9 +81,21 @@ export let Autocomplete = (_dec = inject(Element, TaskQueue), _dec2 = bindable({
     this.userInput = '';
 
     this.element = element;
+    this.bindingEngine = bindingEngine;
     this.taskQueue = taskQueue;
 
+    this.focusSubscription = null;
+    if (focus) {
+      this.focusSubscription = this.bindingEngine.propertyObserver(focus, "value").subscribe(this.focusChanged.bind(this));
+    }
+
     this.suggestionView = new InlineViewStrategy(autoCompleteOptions.suggestionTemplate);
+  }
+
+  detached() {
+    if (this.focusSubscription !== null) {
+      this.focusSubscription.dispose();
+    }
   }
 
   display(name) {
@@ -205,8 +218,10 @@ export let Autocomplete = (_dec = inject(Element, TaskQueue), _dec2 = bindable({
     this.select(suggestion);
   }
 
-  focus() {
-    this.element.firstElementChild.focus();
+  focusChanged(newFocus, oldFocus) {
+    if (newFocus) {
+      this.element.querySelector("input").focus();
+    }
   }
 }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'controller', [bindable], {
   enumerable: true,

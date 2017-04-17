@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-task-queue', './autocompleteoptions'], function (_export, _context) {
+System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-task-queue', './autocompleteoptions'], function (_export, _context) {
   "use strict";
 
-  var bindingMode, observable, bindable, InlineViewStrategy, inject, DOM, TaskQueue, autoCompleteOptions, _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, nextID, Autocomplete;
+  var bindingMode, observable, BindingEngine, bindable, InlineViewStrategy, Focus, inject, Optional, DOM, TaskQueue, autoCompleteOptions, _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, nextID, Autocomplete;
 
   function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
@@ -58,11 +58,15 @@ System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-dependency-in
     setters: [function (_aureliaBinding) {
       bindingMode = _aureliaBinding.bindingMode;
       observable = _aureliaBinding.observable;
+      BindingEngine = _aureliaBinding.BindingEngine;
     }, function (_aureliaTemplating) {
       bindable = _aureliaTemplating.bindable;
       InlineViewStrategy = _aureliaTemplating.InlineViewStrategy;
+    }, function (_aureliaTemplatingResources) {
+      Focus = _aureliaTemplatingResources.Focus;
     }, function (_aureliaDependencyInjection) {
       inject = _aureliaDependencyInjection.inject;
+      Optional = _aureliaDependencyInjection.Optional;
     }, function (_aureliaPal) {
       DOM = _aureliaPal.DOM;
     }, function (_aureliaTaskQueue) {
@@ -73,8 +77,8 @@ System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-dependency-in
     execute: function () {
       nextID = 0;
 
-      _export('Autocomplete', Autocomplete = (_dec = inject(Element, TaskQueue), _dec2 = bindable({ defaultBindingMode: bindingMode.twoWay }), _dec(_class = (_class2 = function () {
-        function Autocomplete(element, taskQueue) {
+      _export('Autocomplete', Autocomplete = (_dec = inject(Element, BindingEngine, TaskQueue, Optional.of(Focus)), _dec2 = bindable({ defaultBindingMode: bindingMode.twoWay }), _dec(_class = (_class2 = function () {
+        function Autocomplete(element, bindingEngine, taskQueue, focus) {
           _classCallCheck(this, Autocomplete);
 
           _initDefineProp(this, 'controller', _descriptor, this);
@@ -102,10 +106,22 @@ System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-dependency-in
           this.userInput = '';
 
           this.element = element;
+          this.bindingEngine = bindingEngine;
           this.taskQueue = taskQueue;
+
+          this.focusSubscription = null;
+          if (focus) {
+            this.focusSubscription = this.bindingEngine.propertyObserver(focus, "value").subscribe(this.focusChanged.bind(this));
+          }
 
           this.suggestionView = new InlineViewStrategy(autoCompleteOptions.suggestionTemplate);
         }
+
+        Autocomplete.prototype.detached = function detached() {
+          if (this.focusSubscription !== null) {
+            this.focusSubscription.dispose();
+          }
+        };
 
         Autocomplete.prototype.display = function display(name) {
           this.updatingInput = true;
@@ -235,8 +251,10 @@ System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-dependency-in
           this.select(suggestion);
         };
 
-        Autocomplete.prototype.focus = function focus() {
-          this.element.firstElementChild.focus();
+        Autocomplete.prototype.focusChanged = function focusChanged(newFocus, oldFocus) {
+          if (newFocus) {
+            this.element.querySelector("input").focus();
+          }
         };
 
         return Autocomplete;

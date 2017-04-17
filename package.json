@@ -1,11 +1,11 @@
 {
   "name": "aurelia-autocomplete",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Autocomplete control for Aurelia",
   "keywords": [
     "aurelia",
     "plugin",
-    "skeleton"
+    "autocomplete"
   ],
   "homepage": "http://github/drivesoftware/aurelia-autocomplete",
   "bugs": {

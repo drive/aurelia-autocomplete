@@ -11,6 +11,8 @@ var _aureliaBinding = require('aurelia-binding');
 
 var _aureliaTemplating = require('aurelia-templating');
 
+var _aureliaTemplatingResources = require('aurelia-templating-resources');
+
 var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
 var _aureliaPal = require('aurelia-pal');
@@ -66,8 +68,8 @@ function _initializerWarningHelper(descriptor, context) {
 
 var nextID = 0;
 
-var Autocomplete = exports.Autocomplete = (_dec = (0, _aureliaDependencyInjection.inject)(Element, _aureliaTaskQueue.TaskQueue), _dec2 = (0, _aureliaTemplating.bindable)({ defaultBindingMode: _aureliaBinding.bindingMode.twoWay }), _dec(_class = (_class2 = function () {
-  function Autocomplete(element, taskQueue) {
+var Autocomplete = exports.Autocomplete = (_dec = (0, _aureliaDependencyInjection.inject)(Element, _aureliaBinding.BindingEngine, _aureliaTaskQueue.TaskQueue, _aureliaDependencyInjection.Optional.of(_aureliaTemplatingResources.Focus)), _dec2 = (0, _aureliaTemplating.bindable)({ defaultBindingMode: _aureliaBinding.bindingMode.twoWay }), _dec(_class = (_class2 = function () {
+  function Autocomplete(element, bindingEngine, taskQueue, focus) {
     _classCallCheck(this, Autocomplete);
 
     _initDefineProp(this, 'controller', _descriptor, this);
@@ -95,10 +97,22 @@ var Autocomplete = exports.Autocomplete = (_dec = (0, _aureliaDependencyInjectio
     this.userInput = '';
 
     this.element = element;
+    this.bindingEngine = bindingEngine;
     this.taskQueue = taskQueue;
+
+    this.focusSubscription = null;
+    if (focus) {
+      this.focusSubscription = this.bindingEngine.propertyObserver(focus, "value").subscribe(this.focusChanged.bind(this));
+    }
 
     this.suggestionView = new _aureliaTemplating.InlineViewStrategy(_autocompleteoptions.autoCompleteOptions.suggestionTemplate);
   }
+
+  Autocomplete.prototype.detached = function detached() {
+    if (this.focusSubscription !== null) {
+      this.focusSubscription.dispose();
+    }
+  };
 
   Autocomplete.prototype.display = function display(name) {
     this.updatingInput = true;
@@ -228,8 +242,10 @@ var Autocomplete = exports.Autocomplete = (_dec = (0, _aureliaDependencyInjectio
     this.select(suggestion);
   };
 
-  Autocomplete.prototype.focus = function focus() {
-    this.element.firstElementChild.focus();
+  Autocomplete.prototype.focusChanged = function focusChanged(newFocus, oldFocus) {
+    if (newFocus) {
+      this.element.querySelector("input").focus();
+    }
   };
 
   return Autocomplete;
