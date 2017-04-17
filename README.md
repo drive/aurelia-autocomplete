@@ -102,7 +102,7 @@ createSuggestion(suggestion) {
 Format the autocomplete results with code in bold by replacing the suggestion part:
 ```html
 <autocomplete value.bind="client" controller.bind="clientAutoCompleteController">
-  <template replaceable part="suggestion"><strong>${suggestion.code}</strong> ${suggestion.description}</template>
+  <template replace-part="suggestion"><strong>${suggestion.code}</strong> ${suggestion.description}</template>
 </autocomplete>
 ```
 
