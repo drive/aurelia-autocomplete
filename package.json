@@ -69,5 +69,8 @@
     "devDependencies": {
       "aurelia-polyfills": "^1.0.0"
     }
+  },
+  "dependencies": {
+    "aurelia-templating-resources": "^1.4.0"
   }
 }
