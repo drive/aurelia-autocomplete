@@ -1,3 +1,9 @@
+# [1.5.0](https://github.com/drivesoftware/aurelia-autocomplete/releases/tag/1.5.0) (2017-04-17)
+
+### Features
+
+* add focus attribute support
+
 # [1.4.1](https://github.com/drivesoftware/aurelia-autocomplete/releases/tag/1.4.1) (2017-04-12)
 
 ### Bugs
