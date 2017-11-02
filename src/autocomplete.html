@@ -1,30 +1,34 @@
 <template>
   <require from="./autocomplete.css"></require>
-  <div class.bind="'form-group ' + (small ? 'form-group-sm' : '')">
-		<label if.bind="title.length > 0"
+  <div class.bind="'form-group' + (small ? ' form-group-sm' : '') + (horizontal ? ' row no-gutters' : '')">
+    <label if.bind="title.length > 0"
            for="${'au-autocomplete-' + id}"
-           class="control-label">${title}</label>
-    <div class="autocomplete-container">
+           class.bind="(horizontal ? 'col-form-label col-4' : '')">${title}</label>
+    <div class.bind="(horizontal ? 'col-8 ' : '') + 'autocomplete-container'">
       <input id="${'au-autocomplete-' + id}"
              value.bind="inputValue & debounce:delay"
              disabled.bind="disabled"
-             placeholder.bind="placeholder"             
+             placeholder.bind="placeholder"
              keydown.delegate="keydown($event.which)"
              blur.trigger="blur()"
              class="form-control"
-             type="text" autocomplete="off"
-             aria-autocomplete="list"/>
+             type="text"
+             autocomplete="off"
+             aria-autocomplete="list" />
       <ul if.bind="expanded"
           id.one-time="'au-autocomplate-' + id + '-suggestions'"
-          class="suggestions" role="listbox"
+          class="suggestions"
+          role="listbox"
           ref="suggestionsUL">
-        <li repeat.for="suggestion of suggestions" 
+        <li repeat.for="suggestion of suggestions"
             id.one-time="'au-autocomplate-' + id + '-suggestion-' + $index"
             class.bind="($index === index ? 'selected ' : '') + (small ? 'small ' : '') + 'suggestion'"
             mousedown.delegate="suggestionClicked(suggestion)"
             role="option">
-          <template replaceable part="suggestion" >
-            <compose view.bind="suggestionView" view-model.bind="suggestion"></compose>
+          <template replaceable
+                    part="suggestion">
+            <compose view.bind="suggestionView"
+                     view-model.bind="suggestion"></compose>
           </template>
         </li>
       </ul>
