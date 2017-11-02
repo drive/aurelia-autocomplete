@@ -55,7 +55,7 @@ define(['exports', 'aurelia-binding', 'aurelia-templating', 'aurelia-templating-
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
   }
 
-  var _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8;
+  var _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9;
 
   var nextID = 0;
 
@@ -77,7 +77,9 @@ define(['exports', 'aurelia-binding', 'aurelia-templating', 'aurelia-templating-
 
       _initDefineProp(this, 'small', _descriptor7, this);
 
-      _initDefineProp(this, 'inputValue', _descriptor8, this);
+      _initDefineProp(this, 'horizontal', _descriptor8, this);
+
+      _initDefineProp(this, 'inputValue', _descriptor9, this);
 
       this.id = nextID++;
       this.expanded = false;
@@ -271,7 +273,12 @@ define(['exports', 'aurelia-binding', 'aurelia-templating', 'aurelia-templating-
     initializer: function initializer() {
       return false;
     }
-  }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, 'inputValue', [_aureliaBinding.observable], {
+  }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, 'horizontal', [_aureliaTemplating.bindable], {
+    enumerable: true,
+    initializer: function initializer() {
+      return false;
+    }
+  }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, 'inputValue', [_aureliaBinding.observable], {
     enumerable: true,
     initializer: function initializer() {
       return '';

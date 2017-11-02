@@ -3,7 +3,7 @@
 System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-task-queue', './autocompleteoptions'], function (_export, _context) {
   "use strict";
 
-  var bindingMode, observable, BindingEngine, bindable, InlineViewStrategy, Focus, inject, Optional, DOM, TaskQueue, autoCompleteOptions, _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, nextID, Autocomplete;
+  var bindingMode, observable, BindingEngine, bindable, InlineViewStrategy, Focus, inject, Optional, DOM, TaskQueue, autoCompleteOptions, _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, nextID, Autocomplete;
 
   function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
@@ -95,7 +95,9 @@ System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-templating-re
 
           _initDefineProp(this, 'small', _descriptor7, this);
 
-          _initDefineProp(this, 'inputValue', _descriptor8, this);
+          _initDefineProp(this, 'horizontal', _descriptor8, this);
+
+          _initDefineProp(this, 'inputValue', _descriptor9, this);
 
           this.id = nextID++;
           this.expanded = false;
@@ -289,7 +291,12 @@ System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-templating-re
         initializer: function initializer() {
           return false;
         }
-      }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, 'inputValue', [observable], {
+      }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, 'horizontal', [bindable], {
+        enumerable: true,
+        initializer: function initializer() {
+          return false;
+        }
+      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, 'inputValue', [observable], {
         enumerable: true,
         initializer: function initializer() {
           return '';
