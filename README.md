@@ -6,6 +6,24 @@ Shamelessly ripped, _improved_, and packaged from a @jdanyow gist https://gist.g
 
 Currently implemented for bootstrap but this could be abstracted in future.
 
+### Installation
+
+`npm install drivesoftware/aurelia-autocomplete`
+
+aurelia.json:
+```json
+{
+   "name": "aurelia-autocomplete",
+   "main": "index",
+   "path": "../node_modules/aurelia-autocomplete/dist/amd",
+   "resources": [
+      "*.js",
+      "*.html",
+      "autocomplete.css"
+   ]
+}
+```
+
 ### Basic Usage
 
 Activate the plugin in your application's aurelia configure callback:
@@ -31,7 +49,7 @@ In your view model
 ```javascript
 import {AutoCompleteController} from 'aurelia-autocomplete';
 
-...
+//...
 
 this.client = null;
 this.clientAutoCompleteController = new AutoCompleteController((searchText) => this.clientApi.search(searchText));
@@ -53,8 +71,8 @@ Used to convert a suggestion to a string of text describing that suggestion. Def
 Given suggestion results 
 ```json
 {
-  code: 'A-SUGGESTION',
-  description: ' A Suggestion Result'
+  "code": "A-SUGGESTION",
+  "description": "A Suggestion Result"
 }
 ```
 
