@@ -55,13 +55,13 @@ this.client = null;
 this.clientAutoCompleteController = new AutoCompleteController((searchText) => this.clientApi.search(searchText));
 ```
 
-The default controller implementation provided expects a single constructor argument which is a search function `suggestion[] search(string searchText)`. The result of the search function should be an array of suggestions based on the search text, with the single assumption that there is a `toString()` function on the suggestion objects.
+The default controller implementation provided expects a single constructor argument which is a search function `suggestion[] search(string searchText)`. The result of the search function should be an array of suggestions based on the search text. A second optional constructor argument allows provision of a callback of the form `string formatSuggestion(suggestion)` if no value is provided, `toString()` is used on the suggestion objects.
 
 ### Advanced Usage
 
 #### AutoCompleteController
 
-To customize the controller replace/override any of the following functions
+Provide a format suggestion callback
 
 `string formatSuggestion(suggestion)`
 
@@ -76,11 +76,10 @@ Given suggestion results
 }
 ```
 
-you could format suggestions by replacing `formatSuggestion` as follows
+you could format suggestions by creating a controller using
 
 ```javascript
-formatSuggestion(suggestion) {
-  return `${code} ${description}`;
+new AutoCompleteController(someSearchCallback, (suggestion) => `${suggestion.code} ${suggestion.description}`);
 }
 
 // example suggestion when selected or listed would be formatted as 'A-SUGGESTION A Suggestion Result'
