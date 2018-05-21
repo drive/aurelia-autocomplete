@@ -13,9 +13,12 @@ define(["exports"], function (exports) {
 
   var AutoCompleteController = exports.AutoCompleteController = function () {
     function AutoCompleteController(search) {
+      var formatSuggestion = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
       _classCallCheck(this, AutoCompleteController);
 
       this._search = search;
+      this._formatSuggestion = formatSuggestion;
     }
 
     AutoCompleteController.prototype.search = function search(searchText) {
@@ -44,7 +47,7 @@ define(["exports"], function (exports) {
     };
 
     AutoCompleteController.prototype.formatSuggestion = function formatSuggestion(suggestion) {
-      return suggestion.toString();
+      if (this._formatSuggestion) return this._formatSuggestion(suggestion);else return suggestion.toString();
     };
 
     AutoCompleteController.prototype.createSuggestion = function createSuggestion(suggestion) {

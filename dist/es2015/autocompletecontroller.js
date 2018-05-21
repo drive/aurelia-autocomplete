@@ -1,6 +1,7 @@
 export let AutoCompleteController = class AutoCompleteController {
-  constructor(search) {
+  constructor(search, formatSuggestion = null) {
     this._search = search;
+    this._formatSuggestion = formatSuggestion;
   }
 
   search(searchText) {
@@ -14,7 +15,7 @@ export let AutoCompleteController = class AutoCompleteController {
   }
 
   formatSuggestion(suggestion) {
-    return suggestion.toString();
+    if (this._formatSuggestion) return this._formatSuggestion(suggestion);else return suggestion.toString();
   }
 
   createSuggestion(suggestion) {
