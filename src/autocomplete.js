@@ -175,7 +175,7 @@ export class Autocomplete {
 
   focusChanged(newFocus, oldFocus) {
     if (newFocus) {
-      this.element.querySelector("input").focus();
+      this.taskQueue.queueMicroTask(() => this.element.querySelector("input").focus());
     }
   }
 }
