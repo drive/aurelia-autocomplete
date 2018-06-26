@@ -222,7 +222,7 @@ export let Autocomplete = (_dec = inject(Element, BindingEngine, TaskQueue, Opti
 
   focusChanged(newFocus, oldFocus) {
     if (newFocus) {
-      this.element.querySelector("input").focus();
+      this.taskQueue.queueMicroTask(() => this.element.querySelector("input").focus());
     }
   }
 }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'controller', [bindable], {

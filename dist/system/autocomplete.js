@@ -254,8 +254,12 @@ System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-templating-re
         };
 
         Autocomplete.prototype.focusChanged = function focusChanged(newFocus, oldFocus) {
+          var _this3 = this;
+
           if (newFocus) {
-            this.element.querySelector("input").focus();
+            this.taskQueue.queueMicroTask(function () {
+              return _this3.element.querySelector("input").focus();
+            });
           }
         };
 
