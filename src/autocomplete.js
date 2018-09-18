@@ -153,8 +153,8 @@ export class Autocomplete {
       return;
     }
 
-    // enter
-    if (key === 13) {
+    // enter || tab
+    if (key === 13 || key === 9) {
       if (this.index >= 0) {
         this.select(this.suggestions[this.index]);
       }
