@@ -230,7 +230,7 @@ System.register(['aurelia-binding', 'aurelia-templating', 'aurelia-templating-re
             return;
           }
 
-          if (key === 13) {
+          if (key === 13 || key === 9) {
             if (this.index >= 0) {
               this.select(this.suggestions[this.index]);
             }

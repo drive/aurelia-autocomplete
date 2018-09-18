@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.3.0"></a>
+# [2.3.0](https://github.com/drivesoftware/aurelia-autocomplete/compare/2.2.0...v2.3.0) (2018-09-18)
+
+
+### Features
+
+* **selection:** tab selects item ([d58efce](https://github.com/drivesoftware/aurelia-autocomplete/commit/d58efce))
+
+
+
 <a name="2.2.0"></a>
 # [2.2.0](https://github.com/drivesoftware/aurelia-autocomplete/compare/2.0.0...v2.2.0) (2018-06-26)
 
