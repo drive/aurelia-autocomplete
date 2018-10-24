@@ -41,7 +41,7 @@ export function configure(aurelia) {
 In your view
 
 ```html
-<autocomplete value.bind="client" controller.bind="clientAutoCompleteController"></autocomplete>
+<autocomplete value.bind="selectedValue" controller.bind="clientAutoCompleteController"></autocomplete>
 ```
 
 In your view model
@@ -51,7 +51,7 @@ import {AutoCompleteController} from 'aurelia-autocomplete';
 
 //...
 
-this.client = null;
+this.selectedValue = null;
 this.clientAutoCompleteController = new AutoCompleteController((searchText) => this.clientApi.search(searchText));
 ```
 
@@ -118,7 +118,7 @@ createSuggestion(suggestion) {
 
 Format the autocomplete results with code in bold by replacing the suggestion part:
 ```html
-<autocomplete value.bind="client" controller.bind="clientAutoCompleteController">
+<autocomplete value.bind="selectedValue" controller.bind="clientAutoCompleteController">
   <template replace-part="suggestion"><strong>${suggestion.code}</strong> ${suggestion.description}</template>
 </autocomplete>
 ```
@@ -137,8 +137,24 @@ export function configure(aurelia) {
 }
 ```
 
-NOTE that the properties used by the template are not `suggestion.` prefixed as they are when replacing the slot content inline.
+**NOTE:** the properties used by the template are not `suggestion.` prefixed as they are when replacing the slot content inline.
 
+### Webpack Installation
+If you are using Webpack and Aurelia, there are a few additional steps you must complete before you can make usage of this plugin.
 
+1. Run `npm install drivesoftware/aurelia-autocomplete`
+2. Insert `aurelia.use.plugin(PLATFORM.moduleName('aurelia-autocomplete'));` into your main bootstrapping file (such as `main.ts`)
+3. Add the following code to the `webpack.config.js` file. Insert it between `new AureliaPlugin(),` and `new ProvidePlugin({ 'Promise': 'bluebird' }),`:
+```js
+new ModuleDependenciesPlugin({
+  'aurelia-autocomplete': [
+    './autocomplete.js',
+    './autocomplete.html',
+    './autocompleteconfiguration.js',
+    './autocompletecontroller.js',
+    './autocompleteoptions.js',
+  ],
+}),
+```
 
-
+Now you should be able to successfully use the plugin like normal.
