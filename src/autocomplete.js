@@ -19,6 +19,7 @@ export class Autocomplete {
   @bindable small = false;
   @bindable horizontal = false;
   @observable inputValue = '';
+  @bindable autoSelectOnSingleMatch = true;
 
   id = nextID++;
   expanded = false;
@@ -92,7 +93,7 @@ export class Autocomplete {
       .then(suggestions => {
         this.index = -1;
         this.suggestions.splice(0, this.suggestions.length, ...suggestions);
-        if (suggestions.length === 1) {
+        if (suggestions.length === 1 && this.autoSelectOnSingleMatch) {
           this.select(suggestions[0]);
         } else if (suggestions.length === 0) {
           this.collapse();
