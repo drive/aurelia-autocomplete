@@ -1,4 +1,4 @@
-var _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9;
+var _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10;
 
 function _initDefineProp(target, property, descriptor, context) {
   if (!descriptor) return;
@@ -74,6 +74,8 @@ export let Autocomplete = (_dec = inject(Element, BindingEngine, TaskQueue, Opti
 
     _initDefineProp(this, 'inputValue', _descriptor9, this);
 
+    _initDefineProp(this, 'autoSelectOnSingleMatch', _descriptor10, this);
+
     this.id = nextID++;
     this.expanded = false;
     this.updatingInput = false;
@@ -143,7 +145,7 @@ export let Autocomplete = (_dec = inject(Element, BindingEngine, TaskQueue, Opti
     this.controller.search(value).then(suggestions => {
       this.index = -1;
       this.suggestions.splice(0, this.suggestions.length, ...suggestions);
-      if (suggestions.length === 1) {
+      if (suggestions.length === 1 && this.autoSelectOnSingleMatch) {
         this.select(suggestions[0]);
       } else if (suggestions.length === 0) {
         this.collapse();
@@ -265,5 +267,10 @@ export let Autocomplete = (_dec = inject(Element, BindingEngine, TaskQueue, Opti
   enumerable: true,
   initializer: function () {
     return '';
+  }
+}), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, 'autoSelectOnSingleMatch', [bindable], {
+  enumerable: true,
+  initializer: function () {
+    return true;
   }
 })), _class2)) || _class);

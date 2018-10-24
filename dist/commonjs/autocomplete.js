@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Autocomplete = undefined;
 
-var _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9;
+var _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10;
 
 var _aureliaBinding = require('aurelia-binding');
 
@@ -90,6 +90,8 @@ var Autocomplete = exports.Autocomplete = (_dec = (0, _aureliaDependencyInjectio
 
     _initDefineProp(this, 'inputValue', _descriptor9, this);
 
+    _initDefineProp(this, 'autoSelectOnSingleMatch', _descriptor10, this);
+
     this.id = nextID++;
     this.expanded = false;
     this.updatingInput = false;
@@ -163,7 +165,7 @@ var Autocomplete = exports.Autocomplete = (_dec = (0, _aureliaDependencyInjectio
 
       _this.index = -1;
       (_suggestions = _this.suggestions).splice.apply(_suggestions, [0, _this.suggestions.length].concat(suggestions));
-      if (suggestions.length === 1) {
+      if (suggestions.length === 1 && _this.autoSelectOnSingleMatch) {
         _this.select(suggestions[0]);
       } else if (suggestions.length === 0) {
         _this.collapse();
@@ -295,5 +297,10 @@ var Autocomplete = exports.Autocomplete = (_dec = (0, _aureliaDependencyInjectio
   enumerable: true,
   initializer: function initializer() {
     return '';
+  }
+}), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, 'autoSelectOnSingleMatch', [_aureliaTemplating.bindable], {
+  enumerable: true,
+  initializer: function initializer() {
+    return true;
   }
 })), _class2)) || _class);
